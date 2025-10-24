@@ -16,6 +16,8 @@ simple project for a blog **using react**
 - ✍ Add post ➡ include form to add New post
 - ®  Register ➡ create new user
 - 🗝 Login ➡ login user
+- 🗝 ForgetPassword 
+- 🗝 Rest Password 
 - ❌ PageNotFound ➡ shown when the user enters an invalid route
 
 ## tools
