@@ -1,7 +1,7 @@
 
-const ErrorMessage = () => {
+const ErrorMessage = ({msg} : {msg:string}) => {
   return (
-    <div>ErrorMessage</div>
+    <span className="text-[13px] text-red-500 font-semibold">{msg}</span>
   )
 }
 
