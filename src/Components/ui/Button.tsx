@@ -1,8 +1,12 @@
+import type { ReactNode } from "react";
 
-const Button = () => {
+type customButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  children:ReactNode
+};
+export const Button = ({children ,  ...rest }: customButtonProps) => {
   return (
-    <div>Button</div>
-  )
-}
-
-export default Button
+    <button className={`w-full text-sm mt-3 cursor-pointer bg-sky-500 text-white p-2 rounded-md`} {...rest}>
+      {children}
+    </button>
+  );
+};
