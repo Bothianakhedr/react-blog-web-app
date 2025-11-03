@@ -1,33 +1,19 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
 import Img from "../assets/image/photo-1488190211105-8b0e65b80b4e.avif";
 import { Button } from "../Components/ui/Button";
 import { Input } from "../Components/ui/Input";
+import type { BlogData } from "../types";
+import { ErrorMessage } from "../Components/ErrorMessage";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { createBlogValidation } from "../validation/validation";
-import type { blogError, blogInfo } from "../types";
-import ErrorMessage from "../Components/ErrorMessage";
 
 export const CreatePost = () => {
-  const [blog, setBlog] = useState<blogInfo>({
-    title: "",
-    description: "",
-    image: null,
+  
+  const { register, handleSubmit ,formState:{errors} } = useForm<BlogData>({
+    resolver:yupResolver(createBlogValidation)
   });
-  const [isError, setIsError] = useState<blogError>({});
+  const onSubmit: SubmitHandler<BlogData> = (data) => console.log(data);
 
-  function handelChange(
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    const { name, value } = e.target;
-    setBlog({
-      ...blog,
-      [name]: value,
-    });
-  }
-  function handelSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const error = createBlogValidation(blog);
-    setIsError(error);
-  }
   return (
     <section className=" mt-20">
       <div className="container mx-auto px-4">
@@ -36,15 +22,15 @@ export const CreatePost = () => {
         </h2>
 
         <div className="grid md:grid-cols-2 my-10 gap-12 ">
-          <div className="image ">
+          <div className="image  md:mt-20 lg:mt-0">
             <img
               src={Img}
               alt=""
-              className="-w-[600px] shadow-xl rounded-2xl "
+              className="w-[600px] shadow-xl rounded-2xl "
             />
           </div>
           <div className="form  md:mt-6">
-            <form className="space-y-2.5" onSubmit={handelSubmit}>
+            <form className="space-y-2.5" onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-2">
                 <label
                   className="text-sm font-medium text-gray-600"
@@ -53,27 +39,30 @@ export const CreatePost = () => {
                   Cover photo
                 </label>
                 <input
-                  onChange={(e) =>
-                    setBlog({ ...blog, image: e.target.files?.[0] || null })
-                  }
-                  name="image"
+                  {...register("image")}
                   id="cover"
                   type="file"
                   className="p-4 rounded-md border-2 border-dashed border-indigo-300 focus:border-sky-400 focus:ring-0 text-gray-500 text-sm cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200"
                 />
-                {isError.image && <ErrorMessage msg="image is required!" />}{" "}
+                {errors.image && <ErrorMessage msg={errors.image.message} />}
               </div>
+              
+              
+              
+              
+              
+              
+              
               <div>
                 <label className="text-[13px]" htmlFor="title">
                   Title
                 </label>
                 <Input
                   placeholder="My Blog"
-                  value={blog.title}
-                  onChange={handelChange}
-                  name="title"
+                  {...register("title")}
+                
                 />
-                {isError.title && <ErrorMessage msg="title is required" />}
+                {errors.title && <ErrorMessage msg={errors.title.message} />}
               </div>
 
               <div className="flex flex-col gap-2">
@@ -84,16 +73,15 @@ export const CreatePost = () => {
                 <textarea
                   className="p-2 rounded-md border-2  border-gray-300   focus:outline-sky-300 focus:ring-1 focus:ring-sky-300 focus:border-sky-300   "
                   placeholder="Type description"
-                  value={blog.description}
-                  onChange={handelChange}
+                  {...register("description")}
                   name="description"
                 ></textarea>
-                {isError.description && (
-                  <ErrorMessage msg="description is required!" />
+                {errors.description && (
+                  <ErrorMessage msg={errors.description.message} />
                 )}
               </div>
 
-              <Button>Add</Button>
+              <Button>Add Post</Button>
             </form>
           </div>
         </div>

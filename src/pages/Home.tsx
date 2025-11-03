@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 import homeBg from "../assets/image/photo-1488190211105-8b0e65b80b4e.avif";
-import PostCard from "../Components/PostCard";
+import {PostCard} from "../Components/PostCard";
 import { posts } from "../data";
 const Home = () => {
   return (
     <section className="mt-14">
-      <div
+      <header
         style={{ backgroundImage: `url(${homeBg})` }}
-        className="bg-no-repeat bg-cover h-180"
-      ></div>
+        className="bg-no-repeat bg-cover h-[700px]"
+      ></header>
 
-      <div className="latest-post-section my-15">
+      <main className="latest-post-section my-15">
         <div className="container mx-auto">
           <div className="flex justify-between items-center mx-3 lg:mx-0">
             <h2 className="border-b-2 border-indigo-300 font-semibold text-3xl  w-fit">
@@ -30,7 +30,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </div>
+      </main>
     </section>
   );
 };

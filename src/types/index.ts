@@ -1,19 +1,41 @@
+// related to register
+ export type RegisterFormData = {
+  userName: string;
+  email: string;
+  password: string;
+};
 
- export type FormInput ={
+ export type FormInputRegister ={
     placeholder:string,
     type:string,
     label:string,
-    name:string,
+    name:keyof RegisterFormData,
     id:string,
+    
 }
 
- export type blogInfo ={
-  title?: string;
-  description?: string;
-  image?: File | null;
-}
-export type blogError = {
-  title?: string;
-  description?: string;
-  image?: string;
+
+
+
+// related to login
+ export type LoginFormData = {
+  email: string;
+  password: string;
 };
+export type FormInputLogin ={
+    placeholder:string,
+    type:string,
+    label:string,
+    name:keyof LoginFormData,
+    id:string,
+    
+}
+
+
+
+// related to blog
+ export type BlogData ={
+  title: string;
+  description: string;
+  image: FileList;
+}
