@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
 import homeBg from "../assets/image/photo-1488190211105-8b0e65b80b4e.avif";
-import {PostCard} from "../Components/PostCard";
+import { PostCard } from "../Components/ui/PostCard";
+import { Link } from "react-router-dom";
 import { posts } from "../data";
-const Home = () => {
+
+ export const Home = () => {
   return (
     <section className="mt-14">
       <header
@@ -35,4 +36,3 @@ const Home = () => {
   );
 };
 
-export default Home;

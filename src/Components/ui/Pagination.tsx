@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-const Pagination = () => {
+ export const Pagination = () => {
   return (
 
 
@@ -44,4 +44,3 @@ const Pagination = () => {
   )
 }
 
-export default Pagination

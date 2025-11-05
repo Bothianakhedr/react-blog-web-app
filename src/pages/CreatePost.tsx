@@ -1,18 +1,31 @@
 import Img from "../assets/image/photo-1488190211105-8b0e65b80b4e.avif";
-import { Button } from "../Components/ui/Button";
-import { Input } from "../Components/ui/Input";
-import type { BlogData } from "../types";
-import { ErrorMessage } from "../Components/ErrorMessage";
+import { Button, ErrorMessage, Input } from "../Components/ui";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { createBlogValidation } from "../validation/validation";
+import { yupResolver } from "@hookform/resolvers/yup";
+import type { BlogData } from "../types";
+
 
 export const CreatePost = () => {
-  
-  const { register, handleSubmit ,formState:{errors} } = useForm<BlogData>({
-    resolver:yupResolver(createBlogValidation)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<BlogData>({
+    resolver: yupResolver(createBlogValidation),
   });
-  const onSubmit: SubmitHandler<BlogData> = (data) => console.log(data);
+
+
+  const onSubmit: SubmitHandler<BlogData> = (data) => {
+    const {title,description,image} =data;
+    const formData = new FormData()
+    formData.append("title" , title)
+    formData.append("description" , description)
+    formData.append("image" , image[0])
+   
+  
+  }
+
 
   return (
     <section className=" mt-20">
@@ -46,22 +59,12 @@ export const CreatePost = () => {
                 />
                 {errors.image && <ErrorMessage msg={errors.image.message} />}
               </div>
-              
-              
-              
-              
-              
-              
-              
+
               <div>
                 <label className="text-[13px]" htmlFor="title">
                   Title
                 </label>
-                <Input
-                  placeholder="My Blog"
-                  {...register("title")}
-                
-                />
+                <Input placeholder="My Blog" {...register("title")} />
                 {errors.title && <ErrorMessage msg={errors.title.message} />}
               </div>
 

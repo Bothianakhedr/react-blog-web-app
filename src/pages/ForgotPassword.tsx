@@ -3,7 +3,7 @@ import { Input } from "../Components/ui/Input";
 
 import bg from "../assets/image/bg.jpg";
 
-const ForgetPassword = () => {
+ export const ForgotPassword = () => {
   return (
     <div
       style={{ backgroundImage: `url(${bg})` }}
@@ -27,4 +27,3 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;

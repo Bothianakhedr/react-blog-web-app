@@ -1,14 +1,11 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup"
-import { ErrorMessage } from "../Components/ErrorMessage";
+import { Button, ErrorMessage, Input } from "../Components/ui";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { registerFormValidation } from "../validation/validation";
 import type { RegisterFormData } from "../types";
-import { Button } from "../Components/ui/Button";
-import { Input } from "../Components/ui/Input";
 import { Link } from "react-router-dom";
 import bg from "../assets/image/bg.jpg";
 import { register_Form } from "../data";
-
 
 export const Register = () => {
   const {
@@ -16,7 +13,7 @@ export const Register = () => {
     register,
     formState: { errors },
   } = useForm<RegisterFormData>({
-    resolver:yupResolver(registerFormValidation)
+    resolver: yupResolver(registerFormValidation),
   });
 
   // send data to backend here
@@ -50,7 +47,7 @@ export const Register = () => {
                   placeholder={placeholder}
                   {...register(name)}
                 />
-                {errors[name] && <ErrorMessage msg={errors[name].message}/>}
+                {errors[name] && <ErrorMessage msg={errors[name].message} />}
               </div>
             ))}
             <Button>Register</Button>

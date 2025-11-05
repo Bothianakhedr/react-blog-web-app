@@ -1,14 +1,13 @@
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { loginFormValidation } from "../validation/validation";
+import { Button, ErrorMessage, Input } from "../Components/ui";
+import { yupResolver } from "@hookform/resolvers/yup";
+import type { LoginFormData } from "../types";
 import { Link } from "react-router-dom";
 import bg from "../assets/image/bg.jpg";
-import { Button } from "../Components/ui/Button";
-import { Input } from "../Components/ui/Input";
 import { login_Form } from "../data";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import type { LoginFormData } from "../types";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { loginFormValidation } from "../validation/validation";
-import { ErrorMessage } from "../Components/ErrorMessage";
-const Login = () => {
+
+ export const Login = () => {
   const {
     register,
     handleSubmit,
@@ -66,4 +65,3 @@ const Login = () => {
   );
 };
 
-export default Login;
