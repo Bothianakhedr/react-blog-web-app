@@ -1,7 +1,7 @@
 import Img from "../assets/image/photo-1488190211105-8b0e65b80b4e.avif";
-import { Button, ErrorMessage, Input } from "../Components/ui";
+import { Button, ErrorMessage, Input, Textarea } from "../Components/ui";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { createBlogValidation } from "../validation/validation";
+import { BlogValidation } from "../validation/validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import type { BlogData } from "../types";
 
@@ -12,7 +12,8 @@ export const CreatePost = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<BlogData>({
-    resolver: yupResolver(createBlogValidation),
+    resolver: yupResolver(BlogValidation),
+   
   });
 
 
@@ -73,12 +74,12 @@ export const CreatePost = () => {
                   Description
                 </label>
 
-                <textarea
+                <Textarea
                   className="p-2 rounded-md border-2  border-gray-300   focus:outline-sky-300 focus:ring-1 focus:ring-sky-300 focus:border-sky-300   "
                   placeholder="Type description"
                   {...register("description")}
                   name="description"
-                ></textarea>
+                />
                 {errors.description && (
                   <ErrorMessage msg={errors.description.message} />
                 )}

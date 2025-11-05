@@ -1,5 +1,5 @@
-import { useState, type FormEvent } from "react";
-import { Button } from "../ui";
+import { useState, type ChangeEvent, type FormEvent } from "react";
+import { Button, Textarea } from "../ui";
 import { toast } from "react-toastify";
 
 export const AddComments = () => {
@@ -15,12 +15,12 @@ export const AddComments = () => {
 
     return (
     <form className="px-8 mt-8" onSubmit={handleSubmit}>
-      <textarea
+      <Textarea
       value={comment}
-      onChange={(e)=>{setComment(e.target.value)}}
+      onChange={(e :ChangeEvent<HTMLTextAreaElement> )=>{setComment(e.target.value)}}
         className="p-2 rounded-md border-2 w-full  border-gray-300   focus:outline-sky-300 focus:ring-1 focus:ring-sky-300 focus:border-sky-300   "
         placeholder="Write a Comment ...."
-      ></textarea>
+      />
       <Button width="w-fit"  >comment</Button>
     </form>
   );

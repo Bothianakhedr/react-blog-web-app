@@ -21,14 +21,20 @@ export const loginFormValidation = yup.object({
 });
 
 // create post
-export const createBlogValidation = yup.object({
-  image: yup.mixed<FileList>().required("image is required!"),
+
+export const BlogValidation = yup.object({
+  image: yup
+    .mixed<FileList>()
+    .required( "image is required!"),
+
   title: yup
     .string()
     .required("title is required")
-    .min(6, "title must be at least 6 character"),
+    .min(6, "title must be at least 6 characters"),
+
   description: yup
     .string()
     .required("description is required")
-    .min(10, "description must be at least 10 character"),
+    .min(10, "description must be at least 10 characters"),
 });
+

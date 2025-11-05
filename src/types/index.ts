@@ -40,5 +40,5 @@ export type PostCardData = {
 export type BlogData = {
   title: string;
   description: string;
-  image: FileList;
+  image: FileList ;
 };
