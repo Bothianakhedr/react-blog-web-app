@@ -9,18 +9,22 @@ import { motion } from "framer-motion";
 import { posts } from "../data";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { Modal } from "../Components/ui/Modal";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { BlogValidation } from "../validation/validation";
 import type { BlogData } from "../types";
-import { Button, ErrorMessage, Input, Textarea } from "../Components/ui";
+import { Button, ErrorMessage, Input, Modal, Textarea } from "../Components/ui";
 
 export const PostDetails = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenCommentModal, setIsOpenCommentModal] = useState(false);
+  const [commentText, setCommentText] = useState("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(BlogValidation),
   });
@@ -28,15 +32,6 @@ export const PostDetails = () => {
     console.log(data);
   };
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  function open() {
-    setIsOpen(true);
-  }
-
-  function close() {
-    setIsOpen(false);
-  }
   const { id } = useParams();
   const post = posts.find((post) => post.id == Number(id));
   useEffect(() => {
@@ -45,7 +40,7 @@ export const PostDetails = () => {
   if (!post) {
     return <h2 className="text-center mt-20">Post Not Found</h2>;
   }
-  const { title, author, likes } = post;
+  const { title, author, likes, content } = post;
 
   // handlers
   const handleDeletePost = () => {
@@ -67,6 +62,17 @@ export const PostDetails = () => {
       }
     });
   };
+  function openModal(post: { title: string; content: string }) {
+    setIsOpen(true);
+    reset({
+      title: post.title,
+      description: post.content,
+    });
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   return (
     <section className="my-20  px-8 md:px-16">
@@ -108,31 +114,10 @@ export const PostDetails = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
         >
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-          Exercitationem laudantium error, harum, cumque labore aspernatur
-          praesentium suscipit officiis similique repudiandae expedita
-          blanditiis officia eaque animi ratione provident ad incidunt ullam
-          illum quaerat molestiae. Ullam deserunt non dolorem magni vero, soluta
-          corrupti cupiditate nisi omnis autem id nesciunt dolores veniam
-          voluptates officia mollitia sed, in, alias doloremque atque officiis?
-          Vitae perspiciatis magni esse! Numquam corporis at sint libero
-          accusamus consequatur enim impedit laborum illo ut! Minus consequatur
-          ut harum dignissimos vel, sed architecto reiciendis, alias delectus
-          cum quia deserunt aspernatur similique facere eos deleniti velit eum
-          voluptatibus autem nemo non accusamus fugiat. Error voluptatibus
-          doloremque, officia eligendi assumenda quaerat facilis laboriosam
-          culpa nulla amet. Quis quos omnis dolorem voluptas repellendus
-          voluptatem obcaecati temporibus odio impedit quod error dignissimos
-          tempore doloremque incidunt odit enim, dolore ad voluptates, natus sit
-          beatae. Odio harum, magni id unde necessitatibus doloribus maxime quis
-          quae esse error voluptatem nulla blanditiis nobis rerum facere ab
-          eaque sint corporis sequi repellat facilis. Sunt deserunt ad maiores
-          numquam consequuntur! Quo sunt, doloribus a quia ipsum fuga voluptate
-          veritatis expedita est dolores, itaque vel saepe perspiciatis placeat
-          sint sit optio laudantium possimus assumenda recusandae sequi tempora
-          minima in? Quos, voluptatem magni!
+          {content}
         </motion.p>
       </div>
+
       <div className="md:flex justify-between mt-3 items-center px-8  ">
         <div className="likes-icon flex gap-3 items-center justify-center mt-5 ">
           <SlLike className="text-2xl cursor-pointer text-blue-700 hover:rotate-6 transition-transform" />
@@ -140,23 +125,25 @@ export const PostDetails = () => {
           <SlDislike className="text-2xl cursor-pointer" />
         </div>
 
-        <div
-          onClick={open}
-          className="flex mt-4 justify-center gap-4 items-center   "
-        >
-          <FaRegEdit className="text-3xl text-blue-700  cursor-pointer hover:scale-105 transition-transform" />
+        <div className="flex mt-4 justify-center gap-4 items-center   ">
+          <FaRegEdit
+            onClick={() => openModal(post)}
+            className="text-3xl text-blue-700  cursor-pointer hover:scale-105 transition-transform"
+          />
           <MdDeleteForever
             onClick={handleDeletePost}
             className="text-3xl text-red-700 cursor-pointer hover:scale-105 transition-transform"
           />
         </div>
       </div>
+
       <hr className="my-8 border-gray-300" />
 
       <AddComments />
-      <CommentList />
+      <CommentList onEditComment={() => setIsOpenCommentModal(true)} />
 
-      <Modal open={isOpen} close={close}>
+      {/* update Modal */}
+      <Modal title="update Post" isOpen={isOpen} closeModal={closeModal}>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-2">
             <label
@@ -184,7 +171,7 @@ export const PostDetails = () => {
             <label className="text-[13px]" htmlFor="description">
               description
             </label>
-            <Textarea {...register("description")} />
+            <Textarea {...register("description")} rows={5} />
             {errors.description && (
               <ErrorMessage msg={errors.description.message} />
             )}
@@ -193,10 +180,28 @@ export const PostDetails = () => {
             <Button className="cursor-pointer rounded-md bg-sky-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none   hover:bg-sky-600 ">
               update
             </Button>
-            <Button onClick={close} className="cursor-pointer rounded-md bg-gray-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none  hover:bg-gray-300 ">
+            <Button
+              onClick={close}
+              className="cursor-pointer rounded-md bg-gray-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none  hover:bg-gray-300 "
+            >
               cancel
             </Button>
           </div>
+        </form>
+      </Modal>
+      {/* update comment  */}
+      <Modal
+        title="update comment"
+        isOpen={isOpenCommentModal}
+        closeModal={() => setIsOpenCommentModal(false)}
+      >
+        <form className="space-y-4">
+          <Input
+            placeholder="update comment..."
+            value={commentText}
+            onChange={(e) => setCommentText(e.target.value)}
+          />
+          <Button>update</Button>
         </form>
       </Modal>
     </section>

@@ -30,9 +30,10 @@ export type PostCardData = {
   post: {
     title: string;
     content: string;
-    createdAt: string;
-    author: string;
-    id: number;
+    createdAt?: string;
+    author?: string;
+    id?: number;
+    likes?:number
   };
 };
 
@@ -41,4 +42,5 @@ export type BlogData = {
   title: string;
   description: string;
   image: FileList ;
+
 };
