@@ -3,6 +3,7 @@ import { CiSearch } from "react-icons/ci";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosLogOut } from "react-icons/io";
 import { TfiWrite } from "react-icons/tfi";
+import imgProfile from "../../assets/image/download.jpg"
 
 import { useState } from "react";
 
@@ -39,6 +40,9 @@ export const Navbar = () => {
               className="text-white border pl-8 py-1 border-gray-300 rounded-full focus:outline-0 "
             />
           </div>
+          <Link to="/profile">
+          <img src={imgProfile} className="w-10 h-10 rounded-full object-fill" alt="" />
+          </Link>
           <div>
             <ul className=" hidden md:flex items-center gap-3 ">
               <li className="hover:text-yellow-500 transition-colors">

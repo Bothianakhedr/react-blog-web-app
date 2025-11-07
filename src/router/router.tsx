@@ -23,6 +23,7 @@ export const router = createBrowserRouter([
       { path: `post/:id`, element: <PostDetails /> },
       { path: "createPost", element: <CreatePost /> },
       { path: "posts", element: <Posts /> },
+      { path: `profile`, element: <Profile /> },
       { path: `profile/:id`, element: <Profile /> },
     ],
   },
