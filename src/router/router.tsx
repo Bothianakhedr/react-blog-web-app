@@ -1,18 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import {
-  ChangePassword,
-  CreatePost,
-  ForgotPassword,
-  Home,
-  Login,
-  PageNotFound,
-  PostDetails,
-  Posts,
-  Profile,
-  Register,
-} from "../pages";
+import { ChangePassword, ForgotPassword, Login, Register } from "../pages/auth";
 
 import { Layout } from "../Components/Layout";
+import { CreatePost, Home, PageNotFound, PostDetails, Posts, Profile } from "../pages";
+import { ContactUs } from "../pages/ContactUs";
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +13,8 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: `post/:id`, element: <PostDetails /> },
       { path: "createPost", element: <CreatePost /> },
-      { path: "posts", element: <Posts /> },
+      { path: "allPosts", element: <Posts /> },
+      { path: "contact", element: <ContactUs /> },
       { path: `profile`, element: <Profile /> },
       { path: `profile/:id`, element: <Profile /> },
     ],

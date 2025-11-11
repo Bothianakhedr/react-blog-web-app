@@ -1,6 +1,6 @@
-import { Posts } from "./AllPosts";
+import { Posts } from "../AllPosts";
 import Swal from "sweetalert2";
-import { ProfileHeader } from "./Profile/ProfileHeader";
+import { ProfileHeader } from "./ProfileHeader";
 
 export const Profile = () => {
   //  *handler

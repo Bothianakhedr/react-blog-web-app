@@ -12,7 +12,7 @@ export const Footer = () => {
           </li>
           <li>
             <Link to="/addBlog" className="hover:text-indigo-600">
-              Add Blog
+              Add Post
             </Link>
           </li>
         </ul>

@@ -29,8 +29,8 @@ export const CreatePost = () => {
 
 
   return (
-    <section className=" mt-20">
-      <div className="container mx-auto px-4">
+    <section className=" mt-20 ">
+      <div className="container mx-auto px-4 ">
         <h2 className="font-semibold text-7xl">
           Add <span className="text-sky-500 ">Blog</span>
         </h2>
@@ -40,7 +40,7 @@ export const CreatePost = () => {
             <img
               src={Img}
               alt=""
-              className="w-[600px] shadow-xl rounded-2xl "
+              className="w-[600px] shadow-xl rounded-2xl object-cover "
             />
           </div>
           <div className="form  md:mt-6">

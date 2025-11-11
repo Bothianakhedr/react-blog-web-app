@@ -4,9 +4,8 @@ import { SlDislike } from "react-icons/sl";
 import { SlLike } from "react-icons/sl";
 import { MdDeleteForever } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import Img from "../assets/image/bg.jpg";
 import { motion } from "framer-motion";
-import { posts } from "../data";
+import { mockPosts } from "../data";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useForm, type SubmitHandler } from "react-hook-form";
@@ -33,14 +32,14 @@ export const PostDetails = () => {
   };
 
   const { id } = useParams();
-  const post = posts.find((post) => post.id == Number(id));
+  const post = mockPosts.find((post) => post.id == Number(id));
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   if (!post) {
     return <h2 className="text-center mt-20">Post Not Found</h2>;
   }
-  const { title, author, likes, content } = post;
+  const { title, author, description ,image  } = post;
 
   // handlers
   const handleDeletePost = () => {
@@ -80,7 +79,7 @@ export const PostDetails = () => {
         <div className="md:grid md:grid-cols-12 gap-8 ">
           <div className="image col-span-5">
             <motion.img
-              src={Img}
+              src={image}
               alt={title}
               className="rounded-md shadow w-full"
               initial={{ x: -200, opacity: 0 }}
@@ -105,6 +104,16 @@ export const PostDetails = () => {
                 {author}
               </Link>
             </h5>
+            <div className="flex mt-4  gap-4 items-center ">
+          <FaRegEdit
+            onClick={() => openModal(post)}
+            className="text-3xl text-blue-700  cursor-pointer hover:scale-105 transition-transform"
+          />
+          <MdDeleteForever
+            onClick={handleDeletePost}
+            className="text-3xl text-red-700 cursor-pointer hover:scale-105 transition-transform"
+          />
+        </div> 
           </motion.div>
         </div>
 
@@ -114,27 +123,18 @@ export const PostDetails = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
         >
-          {content}
+          {description}
         </motion.p>
       </div>
 
       <div className="md:flex justify-between mt-3 items-center px-8  ">
         <div className="likes-icon flex gap-3 items-center justify-center mt-5 ">
           <SlLike className="text-2xl cursor-pointer text-blue-700 hover:rotate-6 transition-transform" />
-          <small>{likes}</small>
+          {/* <small>{likes}</small> */}
           <SlDislike className="text-2xl cursor-pointer" />
         </div>
 
-        <div className="flex mt-4 justify-center gap-4 items-center   ">
-          <FaRegEdit
-            onClick={() => openModal(post)}
-            className="text-3xl text-blue-700  cursor-pointer hover:scale-105 transition-transform"
-          />
-          <MdDeleteForever
-            onClick={handleDeletePost}
-            className="text-3xl text-red-700 cursor-pointer hover:scale-105 transition-transform"
-          />
-        </div>
+        
       </div>
 
       <hr className="my-8 border-gray-300" />

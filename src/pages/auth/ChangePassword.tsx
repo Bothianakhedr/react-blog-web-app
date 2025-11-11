@@ -1,6 +1,6 @@
-import { Button } from "../Components/ui/Button";
-import { Input } from "../Components/ui/Input";
-import bg from "../assets/image/bg.jpg";
+import { Button } from "../../Components/ui/Button";
+import { Input } from "../../Components/ui/Input";
+import bg from "../../assets/image/bg.jpg";
 
 export const ChangePassword = () => {
   return (

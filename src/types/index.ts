@@ -29,11 +29,12 @@ export type FormInputLogin = {
 export type PostCardData = {
   post: {
     title: string;
-    content: string;
-    createdAt?: string;
-    author?: string;
-    id?: number;
-    likes?:number
+    description: string;
+    createdAt: string;
+    author: string;
+    id: number ;
+    category:string,
+    image:string
   };
 };
 

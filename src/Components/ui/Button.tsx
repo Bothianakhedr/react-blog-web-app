@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 type customButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  children:ReactNode
+  children?:ReactNode
   width?:string
 };
 export const Button = ({children ,width="w-full" ,  ...rest }: customButtonProps) => {

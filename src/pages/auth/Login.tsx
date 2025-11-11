@@ -1,23 +1,21 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { Button, ErrorMessage, Input } from "../Components/ui";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { registerFormValidation } from "../validation/validation";
-import type { RegisterFormData } from "../types";
 import { Link } from "react-router-dom";
-import bg from "../assets/image/bg.jpg";
-import { register_Form } from "../data";
+import bg from "../../assets/image/bg.jpg";
+import { loginFormValidation } from "../../validation/validation";
+import { login_Form } from "../../data";
+import { Button, ErrorMessage, Input } from "../../Components/ui";
+import type { LoginFormData } from "../../types";
 
-export const Register = () => {
+ export const Login = () => {
   const {
-    handleSubmit,
     register,
+    handleSubmit,
     formState: { errors },
-  } = useForm<RegisterFormData>({
-    resolver: yupResolver(registerFormValidation),
+  } = useForm<LoginFormData>({
+    resolver: yupResolver(loginFormValidation),
   });
-
-  // send data to backend here
-  const onSubmit: SubmitHandler<RegisterFormData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<LoginFormData> = (data) => console.log(data);
 
   return (
     <div
@@ -30,17 +28,12 @@ export const Register = () => {
             className="bg-white rounded-md  p-10   "
             onSubmit={handleSubmit(onSubmit)}
           >
-            <h1 className="text-center mb-6 font-semibold text-xl ">
-              Create Your Account
-            </h1>
-
-            {/* register Inputs  */}
-            {register_Form.map(({ label, name, placeholder, type, id }) => (
+            <h1 className="text-center mb-6 font-semibold text-xl ">Login</h1>
+            {login_Form.map(({ label, name, placeholder, type, id }) => (
               <div key={id} className="mb-2">
                 <label className="text-[11px]  font-medium " htmlFor={id}>
                   {label}
                 </label>
-
                 <Input
                   type={type}
                   id={id}
@@ -48,16 +41,21 @@ export const Register = () => {
                   {...register(name)}
                 />
                 {errors[name] && <ErrorMessage msg={errors[name].message} />}
+                {type === "password" && (
+                  <div className=" text-sky-500 hover:text-sky-600  transition underline text-end my-1   text-[13px]">
+                    <Link to={"/forgotPassword"}>forgotPassword?</Link>
+                  </div>
+                )}
               </div>
             ))}
-            <Button>Register</Button>
-            <p className="text-[13px] text-center mt-2 font-medium ">
-              Already have an account
+            <Button>Login</Button>
+            <p className="text-[13px] text-center mt-2 font-medium">
+              Don't have an account?
               <Link
                 className="text-sky-500 ms-1 font-semibold underline"
-                to="/login"
+                to="/register"
               >
-                Login
+                Register
               </Link>
             </p>
           </form>
@@ -66,3 +64,4 @@ export const Register = () => {
     </div>
   );
 };
+
