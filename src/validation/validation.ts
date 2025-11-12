@@ -22,7 +22,7 @@ export const loginFormValidation = yup.object({
 
 // create post
 
-export const BlogValidation = yup.object({
+export const PostValidation = yup.object({
   image: yup
     .mixed<FileList>()
     .required( "image is required!"),

@@ -2,5 +2,5 @@ export { Posts } from "./AllPosts";
 export { CreatePost } from "./CreatePost";
 export { Home } from "./Home/index";
 export { PageNotFound } from "./PageNotFound";
-export { PostDetails } from "./PostDetails";
+export { PostDetails } from "./PostDetails/PostDetails";
 export { Profile } from "./Profile/Profile";

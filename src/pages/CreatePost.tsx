@@ -1,9 +1,9 @@
-import Img from "../assets/image/photo-1488190211105-8b0e65b80b4e.avif";
+import Img from "../assets/image/bg.jpg";
 import { Button, ErrorMessage, Input, Textarea } from "../Components/ui";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { BlogValidation } from "../validation/validation";
 import { yupResolver } from "@hookform/resolvers/yup";
-import type { BlogData } from "../types";
+import type { PostDataType } from "../types";
+import { PostValidation } from "../validation/validation";
 
 
 export const CreatePost = () => {
@@ -11,13 +11,13 @@ export const CreatePost = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<BlogData>({
-    resolver: yupResolver(BlogValidation),
+  } = useForm<PostDataType>({
+    resolver: yupResolver(PostValidation),
    
   });
 
 
-  const onSubmit: SubmitHandler<BlogData> = (data) => {
+  const onSubmit: SubmitHandler<PostDataType> = (data) => {
     const {title,description,image} =data;
     const formData = new FormData()
     formData.append("title" , title)
@@ -32,7 +32,7 @@ export const CreatePost = () => {
     <section className=" mt-20 ">
       <div className="container mx-auto px-4 ">
         <h2 className="font-semibold text-7xl">
-          Add <span className="text-sky-500 ">Blog</span>
+          Add <span className="text-sky-600 ">Post</span>
         </h2>
 
         <div className="grid md:grid-cols-2 my-10 gap-12 ">

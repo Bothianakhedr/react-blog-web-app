@@ -39,7 +39,7 @@ export type PostCardData = {
 };
 
 // related to blog
-export type BlogData = {
+export type PostDataType = {
   title: string;
   description: string;
   image: FileList ;

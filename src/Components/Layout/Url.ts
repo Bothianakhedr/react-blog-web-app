@@ -1,5 +1,11 @@
  export const URLS = {
-    viewPost: (id: number) => `/post/${id}`,
+    home:"/",
+    createPost:"/createPost",
+    contact:"/contact",
+    profile:"/profile",
+    register:"/register",
+    login:"/login",
+    viewPost:(id:number)=>`/post/${id}`
 }
 
 
