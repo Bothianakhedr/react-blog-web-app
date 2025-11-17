@@ -21,7 +21,7 @@ export const AddComments = () => {
         className="p-2 rounded-md border-2 w-full  border-gray-300   focus:outline-sky-300 focus:ring-1 focus:ring-sky-300 focus:border-sky-300   "
         placeholder="Write a Comment ...."
       />
-      <Button width="w-fit"  >comment</Button>
+      <Button width="w-fit">comment</Button>
     </form>
   );
 };

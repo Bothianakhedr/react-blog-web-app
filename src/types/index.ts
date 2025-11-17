@@ -1,6 +1,6 @@
 // related to register
 export type RegisterFormData = {
-  userName: string;
+  name: string;
   email: string;
   password: string;
 };
@@ -12,6 +12,10 @@ export type FormInputRegister = {
   name: keyof RegisterFormData;
   id: string;
 };
+export type ErrorResponseType = {
+  message: string;
+};
+
 
 // related to login
 export type LoginFormData = {
@@ -26,17 +30,7 @@ export type FormInputLogin = {
   name: keyof LoginFormData;
   id: string;
 };
-export type PostCardData = {
-  post: {
-    title: string;
-    description: string;
-    createdAt: string;
-    author: string;
-    id: number ;
-    category:string,
-    image:string
-  };
-};
+
 
 // related to blog
 export type PostDataType = {

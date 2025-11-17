@@ -1,13 +1,21 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import bg from "../../assets/image/bg.jpg";
 import { loginFormValidation } from "../../validation/validation";
 import { login_Form } from "../../data";
 import { Button, ErrorMessage, Input } from "../../Components/ui";
-import type { LoginFormData } from "../../types";
+import type { ErrorResponseType, LoginFormData } from "../../types";
+import { axiosInstance } from "../../config/axiosConfig";
+import { toast } from "react-toastify";
+import type { AxiosError } from "axios";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
- export const Login = () => {
+export const Login = () => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const { setToken } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -15,7 +23,36 @@ import type { LoginFormData } from "../../types";
   } = useForm<LoginFormData>({
     resolver: yupResolver(loginFormValidation),
   });
-  const onSubmit: SubmitHandler<LoginFormData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
+    setIsLoading(true);
+    try {
+      const { data: responseData } = await axiosInstance.post(
+        "/api/v1/auth/login",
+        data
+      );
+      if (responseData.status === "success") {
+        localStorage.setItem("token", responseData.data.token);
+        setToken(responseData.data.token);
+        toast.success(responseData.message ,{
+          autoClose:1000,
+          style:{
+            backgroundColor:"black",
+            color:"white"
+            
+            
+          }
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      }
+    } catch (error) {
+      const errorObj = error as AxiosError<ErrorResponseType>;
+      toast.error(errorObj?.response?.data?.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div
@@ -28,7 +65,9 @@ import type { LoginFormData } from "../../types";
             className="bg-white rounded-md  p-10   "
             onSubmit={handleSubmit(onSubmit)}
           >
-            <h1 className="text-center mb-6 font-semibold text-xl ">Login</h1>
+            <h1 className="text-center mb-6 font-semibold text-xl ">
+              Login To Get Access !
+            </h1>
             {login_Form.map(({ label, name, placeholder, type, id }) => (
               <div key={id} className="mb-2">
                 <label className="text-[11px]  font-medium " htmlFor={id}>
@@ -48,7 +87,7 @@ import type { LoginFormData } from "../../types";
                 )}
               </div>
             ))}
-            <Button>Login</Button>
+            <Button isLoading={isLoading}>Login</Button>
             <p className="text-[13px] text-center mt-2 font-medium">
               Don't have an account?
               <Link
@@ -64,4 +103,3 @@ import type { LoginFormData } from "../../types";
     </div>
   );
 };
-

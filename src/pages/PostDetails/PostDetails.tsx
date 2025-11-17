@@ -7,17 +7,18 @@ import {
   PostDetailsImage,
   PostDetailsTitle,
 } from "./index";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { UpdatePostModal } from "./UpdatePostModal";
+import { useScrollToTop } from "../../hooks/useScrollToTop";
+import { AddComments, CommentList } from "../../Components/comments";
 
 export const PostDetails = () => {
   const [isOpenEditPostModal, setIsOpenEditPostModal] = useState(false);
   const { id } = useParams();
-
   const post = mockPosts.find((post) => post.id == Number(id));
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+ 
+  useScrollToTop();
+ 
   if (!post) {
     return <h2 className="text-center mt-20">Post Not Found</h2>;
   }
@@ -52,17 +53,17 @@ export const PostDetails = () => {
         </div>
       </div>
 
-      <hr className="my-8 border-gray-300" />
+      <hr className="mt-8 mb-2 border-gray-300" />
+      <h3 className="text-3xl font-semibold px-8 mb-3">Comments:</h3>
 
-      {/* <AddComments />
-      <CommentList /> */}
+       <AddComments />
+      <CommentList /> 
 
       {/* update Modal */}
       <UpdatePostModal
         isOpenEditPostModal={isOpenEditPostModal}
         onCloseEditPostModal={onCloseEditPostModal}
       />
-     
     </section>
   );
 };

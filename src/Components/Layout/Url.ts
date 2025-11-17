@@ -5,7 +5,8 @@
     profile:"/profile",
     register:"/register",
     login:"/login",
-    viewPost:(id:number)=>`/post/${id}`
+    viewPost:(id:number)=>`/post/${id}`,
+    showCategory:(cat:string)=>`/allPosts?category=${cat}`
 }
 
 

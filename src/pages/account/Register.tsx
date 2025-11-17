@@ -1,14 +1,20 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import bg from "../../assets/image/bg.jpg";
-import type { RegisterFormData } from "../../types";
+import type { ErrorResponseType, RegisterFormData } from "../../types";
 import { registerFormValidation } from "../../validation/validation";
 import { register_Form } from "../../data";
 import { Button, ErrorMessage, Input } from "../../Components/ui";
+import { axiosInstance } from "../../config/axiosConfig";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import type { AxiosError } from "axios";
 
 export const Register = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -17,8 +23,33 @@ export const Register = () => {
     resolver: yupResolver(registerFormValidation),
   });
 
-  // send data to backend here
-  const onSubmit: SubmitHandler<RegisterFormData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
+    setIsLoading(true);
+    try {
+      const { data: responseData } = await axiosInstance.post(
+        "/api/v1/auth/register",
+        data
+      );
+      if (responseData.status === "success") {
+        toast.success(responseData.message, {
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            borderRadius: "10px",
+          },
+        });
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
+      }
+    } catch (error) {
+      const objError = error as AxiosError<ErrorResponseType>;
+      const errorMsg = objError?.response?.data?.message;
+      toast.error(errorMsg);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div
@@ -26,9 +57,9 @@ export const Register = () => {
       className=" bg-center bg-cover h-screen"
     >
       <div className="bg-black/50 h-full flex items-center justify-center ">
-        <div className=" border-15 border-gray-300/15 w-full max-w-[500px] rounded-xl">
+        <div className=" border-15 border-gray-300/15 w-full max-w-[550px] rounded-xl">
           <form
-            className="bg-white rounded-md  p-10   "
+            className="bg-white rounded-md p-10"
             onSubmit={handleSubmit(onSubmit)}
           >
             <h1 className="text-center mb-6 font-semibold text-xl ">
@@ -51,7 +82,7 @@ export const Register = () => {
                 {errors[name] && <ErrorMessage msg={errors[name].message} />}
               </div>
             ))}
-            <Button>Register</Button>
+            <Button isLoading={isLoading}> Register</Button>
             <p className="text-[13px] text-center mt-2 font-medium ">
               Already have an account
               <Link

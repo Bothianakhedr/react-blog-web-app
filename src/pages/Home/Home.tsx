@@ -1,12 +1,19 @@
 import { Link } from "react-router-dom";
-import { Categories, HomeHeader  , LatestPosts } from "./";
-
-
+import { Categories, HomeHeader, LatestPosts } from "./";
+// import axios from "axios"
+// import { useEffect } from "react";
 export const Home = () => {
+//  async function getAllBlogs (){
+//   const {data} = await axios.get("https://blog-app-amber-three.vercel.app/api/v1/blogs")
+  
+
+//   }
+//   useEffect(()=>{
+//     getAllBlogs()
+//   },[])
   return (
     <section className="mt-14">
       <HomeHeader />
-
       <main className="latest-post-section my-16">
         <div className="container mx-auto px-4 lg:px-0">
           <div className="flex justify-between items-center ">

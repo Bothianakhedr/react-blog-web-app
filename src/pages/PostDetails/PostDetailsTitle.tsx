@@ -1,7 +1,4 @@
 import { motion } from "framer-motion";
-import { FaRegEdit } from "react-icons/fa";
-// import { FaRegEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
 
 type PostDetailsTitleType = {
@@ -10,7 +7,11 @@ type PostDetailsTitleType = {
   author: string;
   onOpenEditPostModal: () => void;
 };
-export const PostDetailsTitle = ({ title, author ,onOpenEditPostModal }: PostDetailsTitleType) => {
+export const PostDetailsTitle = ({
+  title,
+  author,
+  onOpenEditPostModal,
+}: PostDetailsTitleType) => {
   // handlers
   const handleDeletePost = () => {
     Swal.fire({
@@ -44,17 +45,20 @@ export const PostDetailsTitle = ({ title, author ,onOpenEditPostModal }: PostDet
         created By:{" "}
         <span className="text-indigo-600 md:text-[13px]">{author}</span>
       </h5>
-      <div className="flex mt-4  gap-4 items-center ">
-        <FaRegEdit
-            onClick={() => onOpenEditPostModal()}
-            className="text-3xl text-blue-700  cursor-pointer hover:scale-105 transition-transform"
-          />
-        <MdDeleteForever
+      <div className="flex mt-4  gap-2 items-center ">
+        <button
+          onClick={() => onOpenEditPostModal()}
+          className=" bg-blue-700  font-medium text-white rounded-md px-2 py-1 cursor-pointer focus:outline-0 "
+        >
+          Edit
+        </button>
+        <button
           onClick={handleDeletePost}
-          className="text-3xl text-red-700 cursor-pointer hover:scale-105 transition-transform"
-        />
+          className=" bg-red-800 font-medium text-white rounded-md px-2 py-1 cursor-pointer focus:outline-0 "
+        >
+          Delete
+        </button>{" "}
       </div>
     </motion.div>
   );
 };
-

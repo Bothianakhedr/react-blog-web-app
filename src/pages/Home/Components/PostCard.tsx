@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-import Img from "../../assets/image/photo-1488190211105-8b0e65b80b4e.avif";
-import type { PostCardData } from "../../types";
-import { URLS } from "../Layout/Url";
+import Img from "../../../assets/image/photo-1488190211105-8b0e65b80b4e.avif";
+import { URLS } from "../../../Components/Layout/Url";
+import { formateDate } from "../helpers/formateDate";
+import type { PostCardData } from "../types";
 
 export const PostCard = ({ post }: PostCardData) => {
   const { title, author, id, createdAt, description, category, image } = post;
-
+   const formattedDate = formateDate(createdAt)
   return (
     <article className="post-card h-full  flex flex-col overflow-hidden rounded-md shadow-md hover:shadow-lg transition-shadow ">
       <div>
@@ -25,7 +26,7 @@ export const PostCard = ({ post }: PostCardData) => {
             </Link>
           </p>
           <span className="text-indigo-600 text-xs">
-            {createdAt ? new Date(createdAt).toDateString() : "Unknown date"}
+            {createdAt ? formattedDate : "Unknown date"}
           </span>
         </div>
 

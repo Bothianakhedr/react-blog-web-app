@@ -3,67 +3,70 @@ import { CiSearch } from "react-icons/ci";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosLogOut } from "react-icons/io";
 import { TfiWrite } from "react-icons/tfi";
-import imgProfile from "../../assets/image/download.jpg";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { NavData } from "./navbar-data";
 import { URLS } from "./Url";
+import { AuthContext } from "../../context/AuthContext";
 
 export const Navbar = () => {
+  const { token , onLogout } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   return (
     <nav className="bg-indigo-500 fixed z-20  left-0 right-0 text-white p-3 ">
       <div className="container mx-auto">
-        <div className="flex items-center gap-10  justify-between">
+        <div className="flex items-center gap-10  px-10 justify-between">
           <Link to={URLS.home}>
             <h1 className="font-bold text-2xl ">Tech Blog</h1>
           </Link>
 
-          <ul className=" hidden md:flex items-center gap-7 text-base">
-            {NavData.map((item, index) => {
-              return (
-                <li
-                  key={index}
-                  className="hover:text-yellow-500 transition-colors"
-                >
-                  <Link className="flex items-center gap-1" to={item.path}>
-                    {item.text === "Create Post" ? (
-                      <TfiWrite className="text-xl" />
-                    ) : (
-                      ""
-                    )}
-                    {item.text}
-                  </Link>
+          {token && (
+            <>
+              <ul className=" hidden md:flex items-center gap-7 text-base">
+                <li className=" md:flex items-center gap-7 ">
+                  {NavData.map((item, index) => (
+                    <Link
+                      key={index}
+                      className="flex hover:text-yellow-500 transition-colors items-center gap-1"
+                      to={item.path}
+                    >
+                      {item.text === "Create Post" ? (
+                        <TfiWrite className="text-xl" />
+                      ) : (
+                        ""
+                      )}
+                      {item.text}
+                    </Link>
+                  ))}
                 </li>
-              );
-            })}
-          </ul>
+              </ul>
+              <div className=" relative text-white hidden md:flex items-center gap-1">
+                <CiSearch className="absolute top-2.5  left-3 " />
+                <input
+                  type="text"
+                  placeholder="Search "
+                  className="text-white border pl-8 py-1 border-gray-300 rounded-full focus:outline-0 "
+                />
+              </div>
+              </>)}
+            
+          
 
-          <div className=" relative text-white hidden md:flex items-center gap-1">
-            <CiSearch className="absolute top-2.5  left-3 " />
-            <input
-              type="text"
-              placeholder="Search "
-              className="text-white border pl-8 py-1 border-gray-300 rounded-full focus:outline-0 "
-            />
-          </div>
-          <Link to={URLS.profile}>
-            <img
-              src={imgProfile}
-              className="w-10 h-10 rounded-full object-fill"
-              alt=""
-            />
-          </Link>
           <div>
-            <ul className=" hidden md:flex items-center gap-3 ">
-              {/* <li className="hover:text-yellow-500 transition-colors">
-                <NavLink to={URLS.login}>login</NavLink>
-              </li>
-              <li className="hover:text-yellow-500 transition-colors">
-                <NavLink to={URLS.register}>register</NavLink>
-              </li> */}
-              <span>
-                <IoIosLogOut className="text-2xl cursor-pointer" />
-              </span>
+            <ul className=" hidden md:flex items-center gap-6 ">
+              {!token ? (
+                <>
+                  <li className="hover:text-yellow-500 transition-colors">
+                    <NavLink to={URLS.login}>Login</NavLink>
+                  </li>
+                  <li className="hover:text-yellow-500 transition-colors">
+                    <NavLink to={URLS.register}>Register</NavLink>
+                  </li>
+                </>
+              ) : (
+                <span onClick={onLogout}>
+                  <IoIosLogOut className="text-2xl cursor-pointer" />
+                </span>
+              )}
             </ul>
           </div>
 

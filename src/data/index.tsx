@@ -2,10 +2,10 @@ import type { FormInputLogin, FormInputRegister } from "../types";
 
 export const register_Form: FormInputRegister[] = [
   {
-    label: "user Name",
-    placeholder: "userName...",
+    label: "Name",
+    placeholder: "Name...",
     type: "text",
-    name: "userName",
+    name: "name",
     id: "userName",
   },
   {

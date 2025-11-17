@@ -1,22 +1,18 @@
 import { Pagination, PostCard } from "../Components/ui";
-import { useEffect } from "react";
 import { mockPosts } from "../data";
 import { Link, useLocation } from "react-router-dom";
+import { useScrollToTop } from "../hooks/useScrollToTop";
 
 export const Posts = () => {
-
   const location = useLocation();
-  const x = new URLSearchParams(location.search);
-  const category = x.get("category");
-  console.log(category);
+  const URLSearchParam = new URLSearchParams(location.search);
+  const category = URLSearchParam.get("category");
 
   const filteredPosts = category
     ? mockPosts.filter((post) => post.category === category)
     : mockPosts;
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useScrollToTop();
 
   return (
     <section className="mt-20">

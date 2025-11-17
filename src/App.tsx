@@ -1,12 +1,13 @@
 import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
-import { router } from "./router/router";
+import { router } from "./router";
+import { AuthContextProvider } from "./context/AuthProvider";
 
 export default function App() {
   return (
-    <div>
+    <AuthContextProvider>
       <RouterProvider router={router}/>
       <ToastContainer />
-    </div>
+    </AuthContextProvider>
   )
 }

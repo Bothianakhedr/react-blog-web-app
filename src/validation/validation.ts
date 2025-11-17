@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 // register
 export const registerFormValidation = yup.object({
-  userName: yup
+  name: yup
     .string()
     .required("userName is required!")
     .min(6, "userName must be at least 6 character"),
