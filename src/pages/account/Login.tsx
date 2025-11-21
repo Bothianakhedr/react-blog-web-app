@@ -32,7 +32,9 @@ export const Login = () => {
       );
       if (responseData.status === "success") {
         localStorage.setItem("token", responseData.data.token);
+        localStorage.setItem("user", JSON.stringify(responseData.data.user));
         setToken(responseData.data.token);
+        
         toast.success(responseData.message ,{
           autoClose:1000,
           style:{

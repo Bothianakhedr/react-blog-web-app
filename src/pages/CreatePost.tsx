@@ -4,29 +4,36 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import type { PostDataType } from "../types";
 import { PostValidation } from "../validation/validation";
-
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { createPost } from "../services/postServices";
+import { useNavigate } from "react-router-dom";
 
 export const CreatePost = () => {
+  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
+  const { user, token } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<PostDataType>({
     resolver: yupResolver(PostValidation),
-   
   });
 
-
   const onSubmit: SubmitHandler<PostDataType> = (data) => {
-    const {title,description,image} =data;
-    const formData = new FormData()
-    formData.append("title" , title)
-    formData.append("description" , description)
-    formData.append("image" , image[0])
-   
-  
-  }
+    const { title, content, image } = data;
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("image", image[0]);
+    formData.append("author", user.name);
+    formData.append("published", "true"); 
 
+    setIsLoading(true)
+
+    createPost({formData, token , navigate ,setIsLoading});
+  };
 
   return (
     <section className=" mt-20 ">
@@ -36,20 +43,17 @@ export const CreatePost = () => {
         </h2>
 
         <div className="grid md:grid-cols-2 my-10 gap-12 ">
-          <div className="image  md:mt-20 lg:mt-0">
+          <div className="image md:mt-20 lg:mt-0">
             <img
               src={Img}
               alt=""
               className="w-[600px] shadow-xl rounded-2xl object-cover "
             />
           </div>
-          <div className="form  md:mt-6">
+          <div className="form md:mt-6">
             <form className="space-y-2.5" onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-2">
-                <label
-                  className="text-sm font-medium text-gray-600"
-                  htmlFor="cover"
-                >
+                <label className="text-[13px]" htmlFor="cover">
                   Cover photo
                 </label>
                 <input
@@ -65,27 +69,26 @@ export const CreatePost = () => {
                 <label className="text-[13px]" htmlFor="title">
                   Title
                 </label>
-                <Input placeholder="My Blog" {...register("title")} />
+                <Input placeholder="title" {...register("title")} />
                 {errors.title && <ErrorMessage msg={errors.title.message} />}
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-[13px]" htmlFor="description">
-                  Description
+                <label className="text-[13px]" htmlFor="content">
+                  content
                 </label>
 
                 <Textarea
                   className="p-2 rounded-md border-2  border-gray-300   focus:outline-sky-300 focus:ring-1 focus:ring-sky-300 focus:border-sky-300   "
-                  placeholder="Type description"
-                  {...register("description")}
-                  name="description"
+                  placeholder="Type content"
+                  {...register("content")}
                 />
-                {errors.description && (
-                  <ErrorMessage msg={errors.description.message} />
+                {errors.content && (
+                  <ErrorMessage msg={errors.content.message} />
                 )}
               </div>
 
-              <Button>Add Post</Button>
+              <Button isLoading={isLoading}>Add Post</Button>
             </form>
           </div>
         </div>

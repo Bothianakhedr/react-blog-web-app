@@ -13,6 +13,7 @@ export const Posts = () => {
     : mockPosts;
 
   useScrollToTop();
+ 
 
   return (
     <section className="mt-20">

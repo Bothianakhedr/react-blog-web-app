@@ -1,16 +1,8 @@
 import { Link } from "react-router-dom";
 import { Categories, HomeHeader, LatestPosts } from "./";
-// import axios from "axios"
-// import { useEffect } from "react";
-export const Home = () => {
-//  async function getAllBlogs (){
-//   const {data} = await axios.get("https://blog-app-amber-three.vercel.app/api/v1/blogs")
-  
 
-//   }
-//   useEffect(()=>{
-//     getAllBlogs()
-//   },[])
+export const Home = () => {
+ 
   return (
     <section className="mt-14">
       <HomeHeader />

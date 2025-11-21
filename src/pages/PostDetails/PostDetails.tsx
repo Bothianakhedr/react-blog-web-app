@@ -1,28 +1,41 @@
 import { useParams } from "react-router-dom";
 import { SlDislike } from "react-icons/sl";
 import { SlLike } from "react-icons/sl";
-import { mockPosts } from "../../data";
 import {
   PostDetailsDescription,
   PostDetailsImage,
   PostDetailsTitle,
 } from "./index";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UpdatePostModal } from "./UpdatePostModal";
 import { useScrollToTop } from "../../hooks/useScrollToTop";
 import { AddComments, CommentList } from "../../Components/comments";
+import { axiosInstance } from "../../config/axiosConfig";
 
 export const PostDetails = () => {
   const [isOpenEditPostModal, setIsOpenEditPostModal] = useState(false);
-  const { id } = useParams();
-  const post = mockPosts.find((post) => post.id == Number(id));
- 
+  const { slug } = useParams();
+  console.log(slug);
+  
+
+
+  const getSinglePost = async () => {
+    try {
+      const res = await axiosInstance.get(`/api/v1/blogs/${slug}`);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(()=>{
+    getSinglePost()
+  },[])
+  
   useScrollToTop();
- 
-  if (!post) {
-    return <h2 className="text-center mt-20">Post Not Found</h2>;
-  }
-  const { title, author, description, image } = post;
+
+  
+  // const { title, author, content, image } = post;
 
   // handler
   const onOpenEditPostModal = () => {
@@ -35,14 +48,14 @@ export const PostDetails = () => {
     <section className="my-20  px-8 md:px-16">
       <div className="container mx-auto px-8">
         <div className="md:grid md:grid-cols-12 gap-8 ">
-          <PostDetailsImage image={image} title={title} />
+          <PostDetailsImage image={"image"} title={"title"} />
           <PostDetailsTitle
             onOpenEditPostModal={onOpenEditPostModal}
-            title={title}
-            author={author}
+            title={"title"}
+            author={"author"}
           />
         </div>
-        <PostDetailsDescription description={description} />
+        <PostDetailsDescription description={"content"} />
       </div>
 
       <div className="md:flex justify-between mt-3 items-center px-8  ">
@@ -56,8 +69,8 @@ export const PostDetails = () => {
       <hr className="mt-8 mb-2 border-gray-300" />
       <h3 className="text-3xl font-semibold px-8 mb-3">Comments:</h3>
 
-       <AddComments />
-      <CommentList /> 
+      <AddComments />
+      <CommentList />
 
       {/* update Modal */}
       <UpdatePostModal

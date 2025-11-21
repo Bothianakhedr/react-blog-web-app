@@ -32,9 +32,9 @@ export const PostValidation = yup.object({
     .required("title is required")
     .min(6, "title must be at least 6 characters"),
 
-  description: yup
+  content: yup
     .string()
-    .required("description is required")
-    .min(10, "description must be at least 10 characters"),
+    .required("content is required")
+    .min(10, "content must be at least 10 characters"),
 });
 

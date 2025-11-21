@@ -35,7 +35,8 @@ export type FormInputLogin = {
 // related to blog
 export type PostDataType = {
   title: string;
-  description: string;
+  content: string;
   image: FileList ;
+  author?:string
 
 };
