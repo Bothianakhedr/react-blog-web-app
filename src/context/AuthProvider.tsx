@@ -6,7 +6,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     localStorage.getItem("token")
   );
   const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user") || "")
+    JSON.parse(localStorage.getItem("user") || "null")
   );
 
   const onLogout = () => {
