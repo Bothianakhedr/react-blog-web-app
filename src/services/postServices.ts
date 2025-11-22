@@ -35,8 +35,10 @@ export const createPost = async ({
 
 export const getAllPosts = async ({ setPosts }: GetAllPostsParams) => {
   try {
-    const { data } = await axiosInstance.get("api/v1/blogs/all");
+    const { data } = await axiosInstance.get("api/v1/blogs");
     setPosts(data.data.blogs);
+    console.log(data.data.blogs);
+    
   } catch (error) {
     const errorObj = error as AxiosError<ErrorResponseType>;
     toast.error(errorObj.response?.data.message);
