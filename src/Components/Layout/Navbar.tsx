@@ -14,12 +14,13 @@ export const Navbar = () => {
   return (
     <nav className="bg-indigo-500 fixed z-20  left-0 right-0 text-white p-3 ">
       <div className="container mx-auto">
-        <div className="flex items-center gap-10  px-7 justify-between">
-          <Link to={URLS.home}>
+<div className="max-w-7xl mx-auto px-4 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-15">
+              <Link to={URLS.home}>
             <h1 className="font-bold text-2xl ">Tech Blog</h1>
           </Link>
 
-          <>
+          
             <ul className=" hidden md:flex items-center gap-7 text-base">
 
                 <li className=" md:flex items-center gap-7 ">
@@ -39,15 +40,15 @@ export const Navbar = () => {
                   ))}
                 </li>
             </ul>
-            <div className=" relative text-white hidden md:flex items-center gap-1">
+          </div>
+            {token && <div className=" relative text-white hidden md:flex items-center gap-1">
               <CiSearch className="absolute top-2.5  left-3 " />
               <input
                 type="text"
                 placeholder="Search "
                 className="text-white border pl-8 py-1 border-gray-300 rounded-full focus:outline-0 "
               />
-            </div>
-          </>
+            </div>}
 
           <div>
             <ul className=" hidden md:flex items-center gap-6 ">
