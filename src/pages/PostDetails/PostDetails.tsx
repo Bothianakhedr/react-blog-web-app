@@ -10,25 +10,16 @@ import { UpdatePostModal } from "./UpdatePostModal";
 import { useScrollToTop } from "../../hooks/useScrollToTop";
 import { AddComments, CommentList } from "../../Components/comments";
 import { useParams } from "react-router-dom";
-import { axiosInstance } from "../../config/axiosConfig";
 import type { PostType } from "../Home/HomeTypes";
+import { getSinglePost } from "../../services/postServices";
 
 export const PostDetails = () => {
   const [isOpenEditPostModal, setIsOpenEditPostModal] = useState(false);
-  const [post, setPost] = useState<PostType>();
+  const [post, setPost] = useState<PostType | null>(null);
   const { slug } = useParams();
 
-  const getSinglePost = async () => {
-    try {
-      const { data } = await axiosInstance.get(`/api/v1/blogs/${slug}`);
-      setPost(data.data.blog);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    getSinglePost();
+    getSinglePost({ slug, setPost });
   }, []);
 
   useScrollToTop();
@@ -36,7 +27,7 @@ export const PostDetails = () => {
     return <h2> not posts yet !</h2>;
   }
 
-  const { title, author, content  , image} = post;
+  const { title, author, content, image } = post;
   // handler
   const onOpenEditPostModal = () => {
     setIsOpenEditPostModal(true);

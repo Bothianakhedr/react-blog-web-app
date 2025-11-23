@@ -10,8 +10,9 @@ import { createPost } from "../services/postServices";
 import { useNavigate } from "react-router-dom";
 
 export const CreatePost = () => {
-  const [isLoading, setIsLoading] = useState(false)
-  const navigate = useNavigate()
+  const [previewImage, setPreviewImage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const { user, token } = useContext(AuthContext);
   const {
     register,
@@ -28,11 +29,19 @@ export const CreatePost = () => {
     formData.append("content", content);
     formData.append("image", image[0]);
     formData.append("author", user.name);
-    formData.append("published", "true"); 
+    formData.append("published", "true");
 
-    setIsLoading(true)
+    setIsLoading(true);
 
-    createPost({formData, token , navigate ,setIsLoading});
+    createPost({ formData, token, navigate, setIsLoading });
+  };
+
+  const handlePreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const url = URL.createObjectURL(file);
+    setPreviewImage(url);
   };
 
   return (
@@ -45,12 +54,12 @@ export const CreatePost = () => {
         <div className="grid md:grid-cols-2 my-10 gap-12 ">
           <div className="image md:mt-20 lg:mt-0">
             <img
-              src={Img}
-              alt=""
-              className="w-[600px] shadow-xl rounded-2xl object-cover "
+              src={previewImage === "" ? Img : previewImage}
+              alt="preview"
+              className="w-[600px] shadow-xl rounded-xl object-cover "
             />
           </div>
-          <div className="form md:mt-6">
+          <div className="form  md:mt-3">
             <form className="space-y-2.5" onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-2">
                 <label className="text-[13px]" htmlFor="cover">
@@ -60,6 +69,7 @@ export const CreatePost = () => {
                   {...register("image")}
                   id="cover"
                   type="file"
+                  onChange={handlePreviewImage}
                   className="p-4 rounded-md border-2 border-dashed border-indigo-300 focus:border-sky-400 focus:ring-0 text-gray-500 text-sm cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200"
                 />
                 {errors.image && <ErrorMessage msg={errors.image.message} />}

@@ -2,7 +2,11 @@ import { toast } from "react-toastify";
 import { axiosInstance } from "../config/axiosConfig";
 import type { AxiosError } from "axios";
 import type { ErrorResponseType } from "../types";
-import type { CreatePostParams, GetAllPostsParams } from "./ServicesType";
+import type {
+  CreatePostParams,
+  GetAllPostsParams,
+  getSinglePostParams,
+} from "./ServicesType";
 
 export const createPost = async ({
   formData,
@@ -10,7 +14,7 @@ export const createPost = async ({
   setIsLoading,
 }: CreatePostParams) => {
   try {
-    const { data } = await axiosInstance.post("/api/v1/blogs", formData)
+    const { data } = await axiosInstance.post("/api/v1/blogs", formData);
     if (data.status == "success") {
       toast.success(data.message, {
         autoClose: 1000,
@@ -32,7 +36,16 @@ export const getAllPosts = async ({ setPosts }: GetAllPostsParams) => {
     const { data } = await axiosInstance.get("api/v1/blogs");
     setPosts(data.data.blogs);
     console.log(data.data.blogs);
-    
+  } catch (error) {
+    const errorObj = error as AxiosError<ErrorResponseType>;
+    toast.error(errorObj.response?.data.message);
+  }
+};
+
+export const getSinglePost = async ({ setPost, slug }: getSinglePostParams) => {
+  try {
+    const { data } = await axiosInstance.get(`/api/v1/blogs/${slug}`);
+    setPost(data.data.blog);
   } catch (error) {
     const errorObj = error as AxiosError<ErrorResponseType>;
     toast.error(errorObj.response?.data.message);

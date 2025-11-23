@@ -1,18 +1,21 @@
 import { Pagination, PostCard } from "../Components/ui";
-import { mockPosts } from "../data";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useScrollToTop } from "../hooks/useScrollToTop";
+import { useEffect, useState } from "react";
+import { getAllPosts } from "../services/postServices";
+import type { PostType } from "./Home/HomeTypes";
+import Skeleton from "./Home/Components/Skeleton";
 
 export const Posts = () => {
-  const location = useLocation();
-  const URLSearchParam = new URLSearchParams(location.search);
-  const category = URLSearchParam.get("category");
+    const [posts, setPosts] = useState<PostType[]>([]);
+  
 
-  const filteredPosts = category
-    ? mockPosts.filter((post) => post.category === category)
-    : mockPosts;
+  
 
   useScrollToTop();
+  useEffect(()=>{
+    getAllPosts({setPosts})
+  },[])
  
 
   return (
@@ -31,11 +34,13 @@ export const Posts = () => {
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredPosts.map((post) => (
-            <div key={post.id} className="h-full">
-              <PostCard post={post} />
-            </div>
-          ))}
+          {posts.length ? (
+        posts.map((post:PostType) => <PostCard post={post} key={post._id} />)
+      ) : (
+
+<>
+{Array.from({length:6} , (_ , index) => <Skeleton key={index}/>)}
+</>)}
         </div>
 
         <Pagination />
