@@ -13,7 +13,6 @@ import {
   PageNotFound,
   PostDetails,
   Posts,
-  Profile,
 } from "../pages";
 import { ContactUs } from "../pages/ContactUs";
 import { ProtectedRoute } from "../Components/auth/ProtectedRoute";
@@ -22,18 +21,15 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <ProtectedRoute>
         <Layout />
-      </ProtectedRoute>
     ),
     children: [
       { index: true, element: <Home /> },
       { path: `post/:slug`, element: <PostDetails /> },
-      { path: "createPost", element: <CreatePost /> },
+      { path: "createPost", element: <ProtectedRoute><CreatePost /></ProtectedRoute> },
       { path: "allPosts", element: <Posts /> },
-      { path: "contact", element: <ContactUs /> },
-      { path: `profile`, element: <Profile /> },
-      { path: `profile/:id`, element: <Profile /> },
+      { path: "contact", element: <ProtectedRoute><ContactUs /></ProtectedRoute> },
+     
     ],
   },
   {

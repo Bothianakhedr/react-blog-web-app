@@ -5,8 +5,8 @@ import { formateDate } from "../helpers/formateDate";
 import type { PostCardData } from "../HomeTypes";
 
 export const PostCard = ({ post }: PostCardData) => {
-  const { title ,slug, author, _id, createdAt, excerpt, category, image } = post;
-   const formattedDate = formateDate(createdAt)
+  const { title, slug, author, _id, createdAt, excerpt, image } = post;
+  const formattedDate = formateDate(createdAt);
   return (
     <article className="post-card h-full  flex flex-col overflow-hidden rounded-md shadow-md hover:shadow-lg transition-shadow ">
       <div>
@@ -31,19 +31,8 @@ export const PostCard = ({ post }: PostCardData) => {
         </div>
 
         <div className="mb-3">
-          <div className="flex justify-between items-start gap-3">
-            <h3 className="font-semibold text-lg leading-snug">{title}</h3>
-            <Link
-              to={`/allPosts?category=${category}`}
-              className="ml-2 whitespace-nowrap bg-indigo-900 text-white px-3 py-1 rounded-md hover:bg-indigo-700 transition-colors text-sm"
-            >
-              {category}
-            </Link>
-          </div>
-
-          <p className="mt-2 text-sm text-gray-500 line-clamp-3">
-            {excerpt}
-          </p>
+          <h3 className="font-semibold text-lg leading-snug">{title}</h3>
+          <p className="mt-2 text-sm text-gray-500 line-clamp-3">{excerpt}</p>
         </div>
 
         <div className="mt-auto">

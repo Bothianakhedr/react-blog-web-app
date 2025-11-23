@@ -11,7 +11,7 @@ export const LatestPosts = () => {
     getAllPosts({setPosts});
   }, []);
   return (
-    <div className="post-list flex-9 mx-3 lg:mx-0 mt-9 grid gap-5 md:grid-cols-2 ">
+    <div className="post-list flex-9 mx-3 lg:mx-0 mt-9 grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
       {posts.length ? (
         posts.map((post:PostType) => <PostCard post={post} key={post._id} />)
       ) : (

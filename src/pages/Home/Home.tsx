@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Categories, HomeHeader, LatestPosts } from "./";
+import {  HomeHeader, LatestPosts } from "./";
 
 export const Home = () => {
  
@@ -22,7 +22,6 @@ export const Home = () => {
 
           <div className="flex flex-col lg:flex-row gap-5">
             <LatestPosts />
-            <Categories />
           </div>
         </div>
       </main>

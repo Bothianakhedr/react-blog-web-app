@@ -2,11 +2,9 @@
     home:"/",
     createPost:"/createPost",
     contact:"/contact",
-    profile:"/profile",
     register:"/register",
     login:"/login",
     viewPost:(_id:string)=>`/post/${_id}`,
-    showCategory:(cat:string)=>`/allPosts?category=${cat}`
 }
 
 

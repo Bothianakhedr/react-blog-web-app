@@ -1,4 +1,3 @@
-// import { useParams } from "react-router-dom";
 import { SlDislike } from "react-icons/sl";
 import { SlLike } from "react-icons/sl";
 import {
@@ -6,39 +5,38 @@ import {
   PostDetailsImage,
   PostDetailsTitle,
 } from "./index";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { UpdatePostModal } from "./UpdatePostModal";
 import { useScrollToTop } from "../../hooks/useScrollToTop";
 import { AddComments, CommentList } from "../../Components/comments";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosConfig";
-// import { axiosInstance } from "../../config/axiosConfig";
+import type { PostType } from "../Home/HomeTypes";
 
 export const PostDetails = () => {
   const [isOpenEditPostModal, setIsOpenEditPostModal] = useState(false);
+  const [post, setPost] = useState<PostType>();
   const { slug } = useParams();
-  console.log(slug);
-  
-
 
   const getSinglePost = async () => {
     try {
-      const res = await axiosInstance.get(`/api/v1/blogs/${slug}`);
-      console.log(res);
+      const { data } = await axiosInstance.get(`/api/v1/blogs/${slug}`);
+      setPost(data.data.blog);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(()=>{
-    getSinglePost()
-  },[])
-  
+  useEffect(() => {
+    getSinglePost();
+  }, []);
+
   useScrollToTop();
+  if (!post) {
+    return <h2> not posts yet !</h2>;
+  }
 
-  
-  // const { title, author, content, image } = post;
-
+  const { title, author, content  , image} = post;
   // handler
   const onOpenEditPostModal = () => {
     setIsOpenEditPostModal(true);
@@ -50,14 +48,14 @@ export const PostDetails = () => {
     <section className="my-20  px-8 md:px-16">
       <div className="container mx-auto px-8">
         <div className="md:grid md:grid-cols-12 gap-8 ">
-          <PostDetailsImage image={"image"} title={"title"} />
+          <PostDetailsImage image={image} title={title} />
           <PostDetailsTitle
             onOpenEditPostModal={onOpenEditPostModal}
-            title={"title"}
-            author={"author"}
+            title={title}
+            author={author}
           />
         </div>
-        <PostDetailsDescription description={"content"} />
+        <PostDetailsDescription description={content} />
       </div>
 
       <div className="md:flex justify-between mt-3 items-center px-8  ">

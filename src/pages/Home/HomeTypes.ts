@@ -4,9 +4,9 @@ export type PostType = {
   createdAt: string;
   author: string;
   _id: string;
-  category?: string;
   image: string;
   slug:string
+  content:string
 };
 
 
