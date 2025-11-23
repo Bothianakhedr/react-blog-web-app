@@ -6,17 +6,11 @@ import type { CreatePostParams, GetAllPostsParams } from "./ServicesType";
 
 export const createPost = async ({
   formData,
-  token,
   navigate,
   setIsLoading,
 }: CreatePostParams) => {
   try {
-    const { data } = await axiosInstance.post("/api/v1/blogs", formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const { data } = await axiosInstance.post("/api/v1/blogs", formData)
     if (data.status == "success") {
       toast.success(data.message, {
         autoClose: 1000,
