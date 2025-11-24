@@ -27,7 +27,7 @@ export const PostDetails = () => {
     return <h2> not posts yet !</h2>;
   }
 
-  const { title, author, content, image } = post;
+  const { title, author, content, image ,_id } = post;
   // handler
   const onOpenEditPostModal = () => {
     setIsOpenEditPostModal(true);
@@ -44,6 +44,7 @@ export const PostDetails = () => {
             onOpenEditPostModal={onOpenEditPostModal}
             title={title}
             author={author}
+            id={_id}
           />
         </div>
         <PostDetailsDescription description={content} />

@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { deletePost } from "../../services/postServices";
 
 type PostDetailsTitleType = {
-  id?: number;
+  id: string;
   title: string;
   author: string;
   onOpenEditPostModal: () => void;
@@ -11,7 +13,9 @@ export const PostDetailsTitle = ({
   title,
   author,
   onOpenEditPostModal,
+  id,
 }: PostDetailsTitleType) => {
+  const navigate = useNavigate();
   // handlers
   const handleDeletePost = () => {
     Swal.fire({
@@ -24,7 +28,7 @@ export const PostDetailsTitle = ({
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        // Call api
+        deletePost({ id  , navigate});
         Swal.fire({
           title: "Deleted!",
           text: "Your post has been deleted.",
@@ -33,6 +37,7 @@ export const PostDetailsTitle = ({
       }
     });
   };
+
   return (
     <motion.div
       className="text-center md:text-left mt-3 col-span-7"

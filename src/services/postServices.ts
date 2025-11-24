@@ -4,6 +4,7 @@ import type { AxiosError } from "axios";
 import type { ErrorResponseType } from "../types";
 import type {
   CreatePostParams,
+  deletePostParams,
   GetAllPostsParams,
   getSinglePostParams,
 } from "./ServicesType";
@@ -46,6 +47,19 @@ export const getSinglePost = async ({ setPost, slug }: getSinglePostParams) => {
   try {
     const { data } = await axiosInstance.get(`/api/v1/blogs/${slug}`);
     setPost(data.data.blog);
+  } catch (error) {
+    const errorObj = error as AxiosError<ErrorResponseType>;
+    toast.error(errorObj.response?.data.message);
+  }
+};
+
+export const deletePost = async ({ id, navigate }: deletePostParams) => {
+  try {
+    const { data } = await axiosInstance.delete(`/api/v1/blogs/${id}`);
+
+    if (data.status == "success") {
+      navigate("/");
+    }
   } catch (error) {
     const errorObj = error as AxiosError<ErrorResponseType>;
     toast.error(errorObj.response?.data.message);

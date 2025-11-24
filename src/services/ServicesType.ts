@@ -17,3 +17,8 @@ export type getSinglePostParams = {
   setPost: React.Dispatch<React.SetStateAction<PostType | null>>;
   slug: string | undefined;
 };
+export type deletePostParams = {
+  id:string
+  navigate :NavigateFunction
+ 
+};
