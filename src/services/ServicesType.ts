@@ -10,8 +10,24 @@ export type CreatePostParams = {
 };
 
 export type GetAllPostsParams = {
-  setPosts: React.Dispatch<React.SetStateAction<PostType[]>>;
+setPosts?: React.Dispatch<React.SetStateAction<GetAllPostsResponse | undefined>>;
+pageNumber?:number
 };
+
+ export type GetAllPostsResponse = {
+  blogs: PostType[];
+  pagination: {
+    blogsPerPage: number;
+    currentPage: number ;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    nextPage: number | null;
+    prevPage: number | null;
+    totalBlogs: number;
+    totalPages: number;
+  };
+  
+}
 
 export type getSinglePostParams = {
   setPost: React.Dispatch<React.SetStateAction<PostType | null>>;

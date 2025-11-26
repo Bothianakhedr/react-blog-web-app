@@ -27,7 +27,8 @@ export const PostDetails = () => {
     return <h2> not posts yet !</h2>;
   }
 
-  const { title, author, content, image ,_id } = post;
+  const { title, author, content, image, _id } = post;
+  
   // handler
   const onOpenEditPostModal = () => {
     setIsOpenEditPostModal(true);
@@ -66,6 +67,7 @@ export const PostDetails = () => {
 
       {/* update Modal */}
       <UpdatePostModal
+      post={post}
         isOpenEditPostModal={isOpenEditPostModal}
         onCloseEditPostModal={onCloseEditPostModal}
       />

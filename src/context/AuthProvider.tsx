@@ -9,13 +9,9 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     JSON.parse(localStorage.getItem("user") || "null")
   );
 
-  const onLogout = () => {
-    setToken(null);
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-  };
+ 
   return (
-    <AuthContext.Provider value={{ token, setToken, onLogout, user, setUser }}>
+    <AuthContext.Provider value={{ token, setToken, user, setUser }}>
       {children}
     </AuthContext.Provider>
   );

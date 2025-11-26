@@ -6,26 +6,63 @@ import {
   Modal,
   Textarea,
 } from "../../Components/ui";
-import type { PostDataType } from "../../types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PostValidation } from "../../validation/validation";
+import type { PostType } from "../Home/HomeTypes";
+import type { PostDataType } from "../../types";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { updatePost } from "../../services/postServices";
 
 type UpdatePostModalType = {
   isOpenEditPostModal: boolean;
   onCloseEditPostModal: () => void;
+  post: PostType;
 };
 export const UpdatePostModal = ({
   isOpenEditPostModal,
   onCloseEditPostModal,
+  post,
 }: UpdatePostModalType) => {
+  const { user } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<PostDataType>({
     resolver: yupResolver(PostValidation),
   });
-  const onSubmit: SubmitHandler<PostDataType> = (data) => console.log(data);
+
+  useEffect(() => {
+    reset({
+      title: post.title,
+      content: post.content,
+    });
+  }, [post.content, post.title, reset]);
+  const onSubmit: SubmitHandler<PostDataType> = async (data) => {
+
+    const { title, content, image } = data;
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("image", image[0]);
+    formData.append("published", "true");
+    formData.append("author", user.name);
+      setIsLoading(true)
+
+    updatePost({
+      post,
+      onCloseEditPostModal,
+      navigate,
+      formData,
+      setIsLoading,
+    });
+  };
 
   return (
     <Modal
@@ -54,24 +91,23 @@ export const UpdatePostModal = ({
           {errors?.title && <ErrorMessage msg={errors.title.message} />}
         </div>
         <div>
-          <label className="text-[13px]" htmlFor="description">
-            description
+          <label className="text-[13px]" htmlFor="content">
+            content
           </label>
-          <Textarea {...register("description")} />
-          {errors?.description && (
-            <ErrorMessage msg={errors.description.message} />
-          )}
+          <Textarea {...register("content")} />
+          {errors?.content && <ErrorMessage msg={errors.content.message} />}
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2  items-center">
           <Button
+          width="w-fit"
+            isLoading={isLoading}
             type="submit"
-            className="cursor-pointer rounded-md bg-sky-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none   hover:bg-sky-600 "
           >
             update
           </Button>
           <Button
             onClick={onCloseEditPostModal}
-            className="cursor-pointer rounded-md bg-gray-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none  hover:bg-gray-300 "
+            className="bg-gray-500 p-1.5 rounded-md mt-2.5 text-white cursor-pointer focus:outline-none  hover:bg-gray-300  font-semibold"
           >
             cancel
           </Button>

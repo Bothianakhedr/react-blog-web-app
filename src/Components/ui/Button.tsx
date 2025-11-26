@@ -16,7 +16,7 @@ export const Button = ({
       disabled={isLoading}
       className={`${width}         
       ${isLoading ? "cursor-not-allowed opacity-70" : "cursor-pointer"}
- text-sm mt-3   bg-sky-600 text-white p-2 rounded-md flex items-center justify-center`}
+ text-sm mt-3   bg-sky-600 text-white p-2 rounded-md flex items-center  justify-center`}
       {...rest}
     >
       {isLoading ? (

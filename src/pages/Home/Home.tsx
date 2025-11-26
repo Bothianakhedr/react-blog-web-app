@@ -4,7 +4,7 @@ import {  HomeHeader, LatestPosts } from "./";
 export const Home = () => {
  
   return (
-    <section className="mt-14">
+    <section className="mt-12">
       <HomeHeader />
       <main className="latest-post-section my-16">
         <div className="container mx-auto px-4 lg:px-0">

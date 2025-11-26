@@ -36,11 +36,7 @@ export const router = createBrowserRouter([
       { path: "allPosts", element: <Posts /> },
       {
         path: "contact",
-        element: (
-          <ProtectedRoute>
-            <ContactUs />
-          </ProtectedRoute>
-        ),
+        element: <ContactUs />,
       },
     ],
   },
