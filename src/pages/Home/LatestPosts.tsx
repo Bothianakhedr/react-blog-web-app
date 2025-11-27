@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import Skeleton from "./Components/Skeleton";
 import { PostCard } from "./Components/PostCard";
 import type { PostType } from "./HomeTypes";

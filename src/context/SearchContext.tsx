@@ -22,9 +22,11 @@ export const SearchContextProvider = ({
   children: ReactNode;
 }) => {
   const [term, setTerm] = useState("");
+  
+  
 
   return (
-    <SearchContext.Provider value={{ term, setTerm }}>
+    <SearchContext.Provider value={{ term, setTerm  }}>
       {children}
     </SearchContext.Provider>
   );

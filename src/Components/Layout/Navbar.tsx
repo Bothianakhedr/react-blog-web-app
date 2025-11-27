@@ -52,7 +52,7 @@ export const Navbar = () => {
           <label htmlFor="input-group-1" className="sr-only">
             Your Email
           </label>
-          {token && (
+          
             <div className="relative hidden md:block">
               <div className="absolute  text-gray-300 inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg
@@ -83,7 +83,7 @@ export const Navbar = () => {
                 }}
               />
             </div>
-          )}
+          
           <ul className="hidden md:flex items-center space-x-3 ms-8">
             {token ? (
               <li>
