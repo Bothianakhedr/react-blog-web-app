@@ -20,9 +20,7 @@ export const router = createBrowserRouter([
       {
         path: `post/:slug`,
         element: (
-          <ProtectedRoute>
             <PostDetails />
-          </ProtectedRoute>
         ),
       },
       {
