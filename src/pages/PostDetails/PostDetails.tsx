@@ -37,7 +37,7 @@ export const PostDetails = () => {
     setIsOpenEditPostModal(false);
   };
   return (
-    <section className="my-20  px-8 md:px-16">
+    <section className="my-20 px-8 md:px-16">
       <div className="container mx-auto px-8">
         <div className="md:grid md:grid-cols-12 gap-8 ">
           <PostDetailsImage image={image} title={title} />
@@ -60,7 +60,7 @@ export const PostDetails = () => {
       </div>
 
       <hr className="mt-8 mb-2 border-gray-300" />
-      <h3 className="text-3xl font-semibold px-8 mb-3">Comments:</h3>
+      <h3 className="text-3xl font-semibold px-8 mb-5">Comments:</h3>
 
       <AddComments />
       <CommentList />

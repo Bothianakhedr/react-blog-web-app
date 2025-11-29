@@ -1,18 +1,22 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { URLS } from "./Url";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { SearchContext } from "../../context/SearchContext";
 
 export const Navbar = () => {
+  const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { token, setToken } = useContext(AuthContext);
+  const { token, setToken ,setUser } = useContext(AuthContext);
   const { term, setTerm } = useContext(SearchContext);
 
   const onLogout = () => {
     setToken(null);
+    setUser(null)
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    navigate("/")
+
   };
   return (
     <nav className=" fixed w-full z-20 top-0 start-0 bg-indigo-400 border-default ">

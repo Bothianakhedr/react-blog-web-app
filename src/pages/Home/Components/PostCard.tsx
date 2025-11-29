@@ -13,7 +13,7 @@ export const PostCard = ({ post }: PostCardData) => {
         <img
           src={image || Img}
           alt={title}
-          className="w-full h-50 object-cover"
+          className="w-full h-50 object-cover "
         />
       </div>
 

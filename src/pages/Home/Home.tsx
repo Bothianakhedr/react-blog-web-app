@@ -9,12 +9,12 @@ export const Home = () => {
       <main className="latest-post-section my-16">
         <div className="container mx-auto px-4 lg:px-0">
           <div className="flex justify-between items-center ">
-            <h2 className="border-b-2 border-indigo-300 font-semibold text-3xl  w-fit">
+            <h2 className="border-b-2 border-indigo-400 font-semibold text-3xl w-fit">
               Latest Posts
             </h2>
             <Link
               to="/allPosts"
-              className="rounded-md outline-2 p-2 text-sm outline-indigo-300 hover:outline-indigo-600 transition-colors"
+              className="rounded-md outline-2 p-2 text-sm outline-indigo-400 hover:outline-indigo-600 transition-colors"
             >
               view all posts ➡
             </Link>

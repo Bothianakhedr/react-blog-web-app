@@ -15,7 +15,7 @@ import { AuthContext } from "../../context/AuthContext";
 export const Login = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { setToken } = useContext(AuthContext);
+  const { setToken ,setUser } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -30,10 +30,13 @@ export const Login = () => {
         "/api/v1/auth/login",
         data
       );
+      
       if (responseData.status === "success") {
         localStorage.setItem("token", responseData.data.token);
         localStorage.setItem("user", JSON.stringify(responseData.data.user));
         setToken(responseData.data.token);
+        setUser(responseData.data.user)
+        
         
         toast.success(responseData.message ,{
           autoClose:1000,

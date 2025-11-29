@@ -98,7 +98,7 @@ export const CreatePost = () => {
                 )}
               </div>
 
-              <Button isLoading={isLoading}>Add Post</Button>
+              <Button width="w-fit" isLoading={isLoading}>Add Post</Button>
             </form>
           </div>
         </div>
